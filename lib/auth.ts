@@ -38,9 +38,9 @@ export const authOptions: NextAuthOptions = {
                 email: user.email
             }
 
-        }catch{
-            console.error("")
-            throw new Error("")
+        }catch(error){
+            console.error("auth error",error)
+            throw error 
         }
 
       },

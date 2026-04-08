@@ -6,10 +6,10 @@ if (!MONGODB_URI) {
   throw new Error("please define mongoUri in env variables");
 }
 
-const cached = global.mongoose;
-if (!cached) {
+if (!global.mongoose) {
   global.mongoose = { conn: null, promise: null };
 }
+const cached = global.mongoose;
 
 async function connectDB(): Promise<Connection | null> {
   if (cached.conn) {

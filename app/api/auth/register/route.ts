@@ -2,7 +2,7 @@ import { connectDB } from "@/lib/db";
 import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();
 
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    User.create({
+    await User.create({
         email, password
     })
 
