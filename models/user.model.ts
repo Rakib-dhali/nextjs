@@ -3,7 +3,8 @@ import bcrypt from "bcryptjs";
 
 export interface IUser {
   email: string;
-  password: string;
+  password?: string;
+  provider?: string;
   _id?: mongoose.Types.ObjectId;
   createdAt?: Date;
   updatedAt?: Date;
@@ -18,7 +19,11 @@ const userSchema = new Schema<IUser>(
     },
     password: {
       type: String,
-      required: true,
+      required: false,
+    },
+    provider: {
+      type: String,
+      default: "credentials",
     },
   },
   {
@@ -27,7 +32,7 @@ const userSchema = new Schema<IUser>(
 );
 
 userSchema.pre("save", async function () {
-  if (this.isModified("password")) {
+  if (this.isModified("password") && this.password) {
     this.password = await bcrypt.hash(this.password, 10);
   }
 });
